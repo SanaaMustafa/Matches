@@ -30,10 +30,11 @@ exports.user_signup = async (req, res, next) => {
         const newuser = new User({
           _id: new mongoose.Types.ObjectId(),
           name: req.body.name,
-          img:req.body.img,
+          img: req.body.img,
           phone: req.body.phone,
           email: req.body.email,
           password: req.body.password,
+          type:req.body.type
         });
         newuser
           .save()
@@ -112,42 +113,38 @@ exports.user_login = (req, res, next) => {
 };
 
 //get profile 
-exports.user_get_profile = async(req , res , next)=>{
-  try{
+exports.user_get_profile = async (req, res, next) => {
+  try {
     let userId = req.userData.userId;
-    let getUser = await User.findOne({id : userId});
-    return res.status(200).json({
-      userDetails : getUser
-    });
+    let getUser = await User.findById(userId)
+    if (!getUser)
+      return res.status(404).end();
+
+    return res.status(200).json(getUser);
 
   }
-  catch(err){
+  catch (err) {
     next(err);
   }
 };
 
 //put profile 
-exports.user_update_profile = async(req , res , next)=>{
-  try{
+exports.user_update_profile = async (req, res, next) => {
+  try {
     let userId = req.userData.userId;
-        let user = await User.findById(userId);
-        if(!user){
-            return res.status(404).json({
-                message: "user not found"
-            })
-        }
-        if(req.file){
-        req.body.img = req.file.path;     
-        }
-        let userUpdated = await User.findByIdAndUpdate(userId, req.body ,{new : true});
-        return res.status(200).json({
-            message:"user updated",
-            userUpdated : userUpdated
-        })                        
-        
+    let user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).end();
+    }
+    if (req.file) {
+      req.body.img = req.file.path;
+    }
+    let userUpdated = await User.findByIdAndUpdate(userId, req.body, { new: true });
+    return res.status(200).json(userUpdated)
+
 
   }
-  catch(err){
+  catch (err) {
     next(err);
   }
 }

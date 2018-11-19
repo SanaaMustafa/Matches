@@ -3,7 +3,8 @@ const router = express.Router();
 const crypto = require('crypto');
 const mime = require('mime');
 const multer = require('multer');
-const UserController = require('../controllers/user');
+const LeagueADMINController = require('../controllers/Admin/league');
+const leagueNORMALController = require('../controllers/Normal/league');
 const checkAuth = require('../middelware/check-auth');
 
 const storage = multer.diskStorage({
@@ -31,14 +32,15 @@ const upload = multer({
     //fileFilter: fileFilter
 });
 
+//ADMIN region
+
+router.post("/admin/league", checkAuth, upload.single('img'), LeagueADMINController.createOne);
+router.put("/admin/league/:leagueId", checkAuth, upload.single('img'), LeagueADMINController.updateOne);
+
+//Normal Reagion
+router.get("/league", checkAuth, leagueNORMALController.getAll);
+router.get("/league/:leagueId", checkAuth, leagueNORMALController.getAll);
 
 
-router.post("/signup", upload.single('img'), UserController.user_signup);
-
-router.post("/login", UserController.user_login);
-
-router.get("/profile",checkAuth , UserController.user_get_profile);
-
-router.put("/profile" ,  checkAuth ,upload.single('img') ,UserController.user_update_profile);
 
 module.exports = router;
