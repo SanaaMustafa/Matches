@@ -37,8 +37,8 @@ router.post("/signup", upload.single('img'), UserController.user_signup);
 
 router.post("/login", UserController.user_login);
 
+router.get("/profile",checkAuth ,  UserController.user_get_profile);
 
-
-
+router.put("/profile" ,  checkAuth ,upload.single('img') ,UserController.user_update_profile);
 
 module.exports = router;

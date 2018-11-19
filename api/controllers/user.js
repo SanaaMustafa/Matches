@@ -110,3 +110,44 @@ exports.user_login = (req, res, next) => {
       next(err);
     });
 };
+
+//get profile 
+exports.user_get_profile = async(req , res , next)=>{
+  try{
+    let userId = req.userData.userId;
+    let getUser = await User.findOne({id : userId});
+    return res.status(200).json({
+      userDetails : getUser
+    });
+
+  }
+  catch(err){
+    next(err);
+  }
+};
+
+//put profile 
+exports.user_update_profile = async(req , res , next)=>{
+  try{
+    let userId = req.userData.userId;
+        let user = await User.findById(userId);
+        if(!user){
+            return res.status(404).json({
+                message: "user not found"
+            })
+        }
+        if(req.file){
+        req.body.img = req.file.path;     
+        }
+        let userUpdated = await User.findByIdAndUpdate(userId, req.body ,{new : true});
+        return res.status(200).json({
+            message:"user updated",
+            userUpdated : userUpdated
+        })                        
+        
+
+  }
+  catch(err){
+    next(err);
+  }
+}
