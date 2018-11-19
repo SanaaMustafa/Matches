@@ -7,7 +7,7 @@ const dbconnection = require('./api/config/config');
 
 dbconnection();
 
-
+const uerRoutes = require('./api/routes/user');
 
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -27,7 +27,7 @@ app.use((req, res, next) => {
 
 app.use(express.static("upload"));
 
-
+app.use('/', uerRoutes);
 
 
 
