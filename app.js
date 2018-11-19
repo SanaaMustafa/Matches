@@ -9,6 +9,7 @@ dbconnection();
 
 const uerRoutes = require('./api/routes/user');
 const leagueRoutes = require('./api/routes/league');
+const teamRoutes = require('./api/routes/team');
 
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -30,7 +31,7 @@ app.use(express.static("upload"));
 
 app.use('/', uerRoutes);
 app.use('/', leagueRoutes)
-
+app.use('/', teamRoutes);
 app.use((req, res, next) => {
   const error = new Error("Not found");
   error.status = 404;
