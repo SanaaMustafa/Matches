@@ -9,8 +9,12 @@ dbconnection();
 
 const uerRoutes = require('./api/routes/user');
 const leagueRoutes = require('./api/routes/league');
+<<<<<<< HEAD
 const MatchRoutes = require('./api/routes/match');
 
+=======
+const teamRoutes = require('./api/routes/team');
+>>>>>>> 48e01fb562ff5442dd638f350ce9ee05c1a05fc1
 
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -31,9 +35,14 @@ app.use((req, res, next) => {
 app.use(express.static("upload"));
 
 app.use('/', uerRoutes);
+<<<<<<< HEAD
 app.use('/', leagueRoutes);
 app.use('/', MatchRoutes);
 
+=======
+app.use('/', leagueRoutes)
+app.use('/', teamRoutes);
+>>>>>>> 48e01fb562ff5442dd638f350ce9ee05c1a05fc1
 app.use((req, res, next) => {
   const error = new Error("Not found");
   error.status = 404;
