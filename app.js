@@ -11,7 +11,7 @@ const uerRoutes = require('./api/routes/user');
 const leagueRoutes = require('./api/routes/league');
 const MatchRoutes = require('./api/routes/match');
 const teamRoutes = require('./api/routes/team');
-
+const playerRoutes = require('./api/routes/player');
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -35,6 +35,7 @@ app.use('/', leagueRoutes);
 app.use('/', MatchRoutes);
 app.use('/', leagueRoutes)
 app.use('/', teamRoutes);
+app.use('/', playerRoutes);
 app.use((req, res, next) => {
   const error = new Error("Not found");
   error.status = 404;
