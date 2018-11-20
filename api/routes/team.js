@@ -31,11 +31,13 @@ const upload = multer({
     //fileFilter: fileFilter
 });
 
-router.post('/admin/league/:leagueId/team', checkAuth, upload.single('img') , AdminTeamController.create_team);
+//admin region
+router.post('/admin/league/:leagueId/team', checkAuth, upload.single('img'), AdminTeamController.create_team);
 
-router.put('/admin/league/:leagueId/team/:teamId' , checkAuth , upload.single('img'), AdminTeamController.update_team);
+router.put('/admin/league/:leagueId/team/:teamId', checkAuth, upload.single('img'), AdminTeamController.update_team);
 
-router.get('/league/:leagueId/teams',NormalTeamController.get_all_teams );
+//Normal Region
+router.get('/league/:leagueId/teams', NormalTeamController.get_all_teams);
 
 router.get('/league/:leagueId/team/:teamId', NormalTeamController.get_single_team);
 module.exports = router;

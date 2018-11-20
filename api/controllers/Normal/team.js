@@ -9,8 +9,9 @@ const toImgUrl = require('../../utils/index');
 exports.get_all_teams = async (req, res, next) => {
     try {
 
-        let getAllTeams = await Team.find({ league: req.params.leagueId }).populate('league').sort({ creationDate: -1 });
-        console.log(getAllTeams);
+        let getAllTeams = await Team.find({ league: req.params.leagueId })
+            .populate('league')
+            .sort({ creationDate: -1 });
         return res.status(200).json(getAllTeams);
 
 
@@ -20,12 +21,16 @@ exports.get_all_teams = async (req, res, next) => {
     }
 };
 
-// update team 
+// fetch one team 
 
 exports.get_single_team = async (req, res, next) => {
     try {
         let teamId = req.params.teamId;
-        let getSingleTeam = await Team.findById(teamId).populate('league');
+        let getSingleTeam = await Team.findById(teamId)
+            .populate('league');
+
+        if (!getSingleTeam)
+            return res.status(404).end();
         return res.status(200).json(getSingleTeam);
     }
     catch (err) {
